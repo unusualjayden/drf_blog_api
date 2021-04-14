@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from posts.models import Post
 from posts.serializers import UserPostSerializer
-from users.serializers import UserCreateSerializer
+from users.serializers import UserActivitySerializer, UserCreateSerializer
 
 User = get_user_model()
 
@@ -40,3 +40,9 @@ class UserPostsDetailView(ListAPIView):
     lookup_field = 'username'
     serializer_class = UserPostSerializer
     queryset = Post.objects.select_related('author')
+
+
+class UserActivityView(ListAPIView):
+    serializer_class = UserActivitySerializer
+    queryset = User.objects.all().values('username', 'last_login', 'last_active')
+    lookup_field = 'username'

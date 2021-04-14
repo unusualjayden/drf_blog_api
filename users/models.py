@@ -21,4 +21,3 @@ class User(AbstractUser):
     class Meta:
         ordering = ['username']
         db_table = 'user'
-
