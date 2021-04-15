@@ -1,5 +1,6 @@
 # drf_blog_api
 Simple blog api with JWT authentication. Project was made using Django + Django Rest Framework + djangorestframework-simplejwt.
+
 There are some ideas for improvement current version of API, like replacing user activity fields in database with Redis and migrating to PostgreSQL, that i will implement later. 
 
 
