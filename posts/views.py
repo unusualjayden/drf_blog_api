@@ -9,12 +9,18 @@ from rest_framework.viewsets import ModelViewSet
 from posts.models import Like, Post
 from posts.serializers import AnalyticsSerializer, UserPostSerializer
 from posts.services import analytics_prettify_data, parse_analytics_date
+from users.permissions import IsAuthor
 
 
 class PostViewSet(ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Post.objects.all().select_related('author')
     serializer_class = UserPostSerializer
+
+    def get_permissions(self):
+        if self.action == 'destroy':
+            return [IsAuthor(), ]
+        return super(PostViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
